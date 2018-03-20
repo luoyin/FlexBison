@@ -1,5 +1,5 @@
 %{
-#include "fb1-5.tab.hpp"
+#include "fb1-5.tab.h"
 %}
 
 %%

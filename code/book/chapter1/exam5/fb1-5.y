@@ -9,22 +9,22 @@
 
 %%
 
-calclist:
+calclist:					
 	| calclist exp EOL		{ printf("=%d\n> ", $2); }
 	| calclist EOL			{ printf("> "); }
 	;
 
-exp: factor
+exp: factor					
 	| exp ADD factor		{ $$=$1+$3; }
 	| exp SUB factor		{ $$=$1-$3; }
 	;
 	
-factor: term
+factor: term				
 	| factor MUL term		{ $$=$1*$3; }
 	| factor DIV term		{ $$=$1/$3; }
 	;
 
-term: NUMBER
+term: NUMBER				
 	| ABS term				{ $$=$2>=0?$2:-$2; }
 	| OP exp CP				{ $$=$2; }
 	;
