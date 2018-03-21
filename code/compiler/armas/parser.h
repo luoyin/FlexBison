@@ -5,10 +5,9 @@
 extern int yylineno;
 void yyerror(char *s, ...);
 
-struct s_REG
-{
-	int regndx;
-};
-
-struct s_REG * SolveReg(char *s);
+unsigned int SolveReg(char *s);
+unsigned int SolveCondCode(char *s);
+int SolveImm_Hex(char *s);
+int SolveHex(char *s);
+int SolveHexChar(char c);
 void yyerror(char *s, ...);

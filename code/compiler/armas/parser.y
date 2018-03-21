@@ -3,14 +3,19 @@
 %}
 
 %union{
-	struct s_REG *reg;
-	unsigned int imm;
+	unsigned int regndx;
+	unsigned int condcode;
+	int imm;
 }
 
-%token <reg> REG
-%token <imm> IMM
+%token <regndx> REG
+%token <condcode> COND
+%token <condcode> LDR
+%token <imm> IMM_P
+%token <imm> IMM_N
 
 %token EOL
+%token COMMA
 %token ROT
 %token LSL
 %token LSR
@@ -21,54 +26,20 @@
 %%
 
 stmt: 
-	| stmt stmt_ins EOL
+	| stmt reg EOL
+	| stmt addr_mode2 EOL
+	| stmt imm EOL		
 	;
 	
-stmt_ins:
-	| stmt_ins_branch
-	| stmt_ins_data_process
-	;
-	
-stmt_ins_data_process:
-	| opcode_data_process1 reg, shifter_operand
-	| opcode_data_process2 reg, shifter_operand
-	| opcode_data_process3 reg, reg, shifter_operand
+addr_mode2:
+	'[' REG ',' 		{ printf("Addressing Mode2\n> "); }
 	;
 
-shifter_operand: 
-	IMM,
-	| reg
-	| reg, ROT #IMM
-	| reg, ROT reg
-	;
-	
-	
-opcode_data_process1:
-	| MOV
-	| MVN
-	;
+imm:
+	IMM_P				{ printf("Imm=+0x%x\n", $1); }
+	| IMM_N				{ printf("Imm=-0x%x\n", $1); }
 
-opcode_data_process2:
-	| CMP
-	| CMN
-	| TST
-	| TEQ
-	;
-	
-opcode_data_process3:
-	| ADD
-	| SUB
-	| RSB
-	| ADC
-	| SBC
-	| RSC
-	| AND
-	| BIC
-	| EOR
-	| ORR
-	;
-	
-reg: REG				{ printf("R%d\n> ", $1->regndx); }
+reg: REG				{ printf("R%d\n> ", $1); }
 	;
 	
 
