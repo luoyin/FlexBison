@@ -6,3 +6,4 @@ add_executable(compiler main.cpp)
 install(TARGETS compiler RUNTIME DESTINATION bin)
 
 add_subdirectory(armas)
+add_subdirectory(as8008)
